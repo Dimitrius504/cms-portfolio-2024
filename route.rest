@@ -1,0 +1,18 @@
+GET http://localhost:5000/api/skills/
+
+
+###
+
+GET http://localhost:5000/api/skills/12
+
+
+###
+
+POST http://localhost:5000/api/skills
+Content-Type: application/json
+
+{
+  "name": "React",
+  "rating": "9",
+  "parentSkillCategory": "Front-End Skills",
+  "icon": "<svg viewBox=\"0 0 512 512\" fill=\"currentColor\" height=\"1em\" width=\"1em\"><path d=\"M410.66 180.72q-7.67-2.62-15.45-4.88 1.29-5.25 2.38-10.56c11.7-56.9 4.05-102.74-22.06-117.83-25-14.48-66 .61-107.36 36.69q-6.1 5.34-11.95 11-3.9-3.76-8-7.36c-43.35-38.58-86.8-54.83-112.88-39.69-25 14.51-32.43 57.6-21.9 111.53q1.58 8 3.55 15.93a320.85 320.85 0 

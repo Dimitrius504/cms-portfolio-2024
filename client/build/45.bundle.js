@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkclient=self.webpackChunkclient||[]).push([[45],{45:(e,t,c)=>{c.r(t),c.d(t,{default:()=>n});var l=c(540);const n=function(){return l.createElement("div",{className:""},l.createElement("h1",{className:"text-2xl font-bold text-center"},"Welcome to My Fullstack App"))}}}]);
