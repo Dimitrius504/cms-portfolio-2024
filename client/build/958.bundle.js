@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkclient=self.webpackChunkclient||[]).push([[958],{958:(e,l,n)=>{n.r(l),n.d(l,{default:()=>c});var t=n(540);const c=function(){return t.createElement("div",null,"Skills")}}}]);
