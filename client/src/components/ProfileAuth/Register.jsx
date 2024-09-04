@@ -1,7 +1,7 @@
+
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -12,6 +12,7 @@ const Register = () => {
         password: '',
         image: null
     });
+    const [error, setError] = useState('');
 
     const navigate = useNavigate();
 
@@ -40,18 +41,25 @@ const Register = () => {
 
             if (response.status === 201) {
                 navigate('/signin');
+            } else if (response.status === 400) {
+                setError('Invalid data. Please check your form.');
             }
-
+            else {
+                throw new Error('Failed to register.');
+            }
         } catch (error) {
+            setError('Invalid data. Please check your form.');
             console.error('Error posting form:', error);
         }
     };
 
+
     return (
-        
+
         <div className="min-h-screen bg-gray-100 flex flex-col justify-center items-center">
             <div className="max-w-md w-full bg-white rounded-lg shadow-md p-6">
                 <form onSubmit={handleSubmit} className="space-y-6">
+
                     <h2 className="text-center text-3xl font-extrabold text-gray-900">Register</h2>
                     <div className="space-y-1">
                         <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">First Name</label>
@@ -100,7 +108,7 @@ const Register = () => {
                             required className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             onChange={handleChange} />
                     </div>
-                    
+
                     <div className="space-y-1">
                         <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700">Phone Number (Optional)</label>
                         <input type="tel" name="phoneNumber" id="phoneNumber"
@@ -108,12 +116,9 @@ const Register = () => {
                             onChange={handleChange} />
                     </div>
                     
-                    {/* <div className="space-y-1">
-                        <label htmlFor="image" className="block text-sm font-medium text-gray-700">Image</label>
-                        <input type="file" name="image" id="image"
-                            className="block w-full text-sm text-gray-500 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
-                            onChange={handleChange} />
-                    </div> */}
+                    {error && (
+                        <div className="text-red-500 text-center mb-2">{error}</div>
+                    )}
 
                     <button type="submit" className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                         Register

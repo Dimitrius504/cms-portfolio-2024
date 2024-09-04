@@ -93,7 +93,9 @@ const App = () => {
                 <Route path="/contact" element={<Contactpage />} />
                 <Route path="/projects" element={<ProjectsTestPage />} />
                 <Route path="/resume" element={<Resumepage />} />
-                <Route path="/account" element={<Accountpage isAdmin={isAdmin} />} isAdmin={isAdmin} />
+                <Route path="/account" element={
+                    <Accountpage isAdmin={isAdmin} />
+                } />
                 <Route path="/admin/categories" element={
                   <AdminRoute>
                     <AdminCategorySubmit />

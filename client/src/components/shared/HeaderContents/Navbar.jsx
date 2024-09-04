@@ -53,7 +53,7 @@ const Navbar = () => {
             </Link>
             <AiOutlineClose size={20} onClick={toggleMenu} />
           </div>
-          <NavLinks />
+          <NavLinks onClick={toggleMenu}/>
         </div>
       )}
     </nav>
