@@ -90,12 +90,6 @@ const Resume = () => {
                 performance and user engagement.</p>
             </section>
 
-            <section>
-              <h2 className="text-2xl font-bold border-b-2 border-gray-300 py-2">References</h2>
-              <p>Shaun McKinnon (705) 350-0607</p>
-              <p>Nikki Blackford (705) 333-6266</p>
-              <p>Rich Freeman</p>
-            </section>
           </div>
         </div>
       </div>

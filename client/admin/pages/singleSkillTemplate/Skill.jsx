@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { IconsManifest } from "react-icons/lib";
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const Skill = () => {
   const [skill, setSkill] = useState(null);
@@ -10,6 +12,8 @@ const Skill = () => {
     icon: "",
     parentSkillCategory: "",
     rating: "",
+    startDate: new Date(),
+    endDate: null,
   });
   const [parentSkillCategories, setParentSkillCategories] = useState([]);
   const [IconComponent, setIconComponent] = useState(null);
@@ -17,25 +21,26 @@ const Skill = () => {
 
   const { id } = useParams();
 
-  useEffect(() => {
+   useEffect(() => {
     const fetchSkill = async () => {
       try {
         const response = await axios.get(`/api/skills/${id}`);
         const fetchedSkill = response.data.skill;
-
         setSkill(fetchedSkill);
         setEditedSkill({
           name: fetchedSkill?.name || "",
           icon: fetchedSkill?.icon || "",
-          parentSkillCategory: fetchedSkill?.parentSkillCategory._id || "",
+          parentSkillCategory: fetchedSkill?.parentSkillCategory?._id || "",
           rating: fetchedSkill?.rating?.toString() || "",
+          startDate: fetchedSkill?.startDate ? new Date(fetchedSkill?.startDate) : new Date(),
+          endDate: fetchedSkill?.endDate ? new Date(fetchedSkill.endDate) : null,
         });
-
         loadIcon(fetchedSkill?.icon);
       } catch (error) {
         console.error("Error fetching skill:", error);
       }
     };
+
 
     const fetchCategories = async () => {
       try {
@@ -61,6 +66,14 @@ const Skill = () => {
     }
   };
 
+  const formattedDate = (dateString) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
   const handleCategoryChange = (e) => {
     const selectedCategoryId = e.target.value;
     setEditedSkill((prev) => ({
@@ -71,7 +84,7 @@ const Skill = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!editedSkill.name || !editedSkill.icon || !editedSkill.rating) {
+    if (!editedSkill.name || !editedSkill.icon || !editedSkill.rating || !editedSkill.parentSkillCategory || !editedSkill.startDate) {
       setError("All fields are required.");
       return;
     }
@@ -104,9 +117,13 @@ const Skill = () => {
     }
   };
 
+  const handleDateChange = (date, name) => {
+    setEditedSkill(prev => ({ ...prev, [name]: date }));
+  };
+
   return (
     <div className="max-w-4xl mx-auto mt-8">
-      {skill && (
+       {skill && (
         <form onSubmit={handleSubmit} className="bg-white shadow-md rounded-lg px-8 py-6">
           <h2 className="text-2xl font-bold mb-4 text-gray-800">Edit Skill</h2>
           {error && <div className="mb-4 text-red-500">{error}</div>}
@@ -175,6 +192,27 @@ const Skill = () => {
               onChange={handleChange}
               min="1"
               max="10"
+              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            />
+          </div>
+          <div className="mb-4">
+             <label htmlFor="startDate" className="block text-sm font-medium text-gray-700">
+              Start Date
+            </label>
+            <DatePicker
+              selected={editedSkill.startDate}
+              onChange={(date) => handleDateChange(date, 'startDate')}
+              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="endDate" className="block text-sm font-medium text-gray-700">
+              End Date (optional)
+            </label>
+            <DatePicker
+              selected={editedSkill.endDate}
+              onChange={(date) => handleDateChange(date, 'endDate')}
+              isClearable
               className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             />
           </div>

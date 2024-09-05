@@ -2,6 +2,13 @@ import React, { useState, useEffect } from "react";
 import SkillsForm from "../components/SkillsForm";
 import axios from "axios";
 import { iconMapping } from "../components/IconMapping.js";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
+
+const overallDevStartDate = new Date('2022-09-01');
+
+
 
 const SubmitSkills = () => {
   const [skills, setSkills] = useState([]);
@@ -11,7 +18,18 @@ const SubmitSkills = () => {
     const fetchSkills = async () => {
       try {
         const response = await axios.get("/api/skills");
-        setSkills(response.data);
+        const updatedSkills = response.data.map(skill => {
+          const startDate = new Date(skill.startDate);
+          const endDate = skill.endDate ? new Date(skill.endDate) : new Date();
+          const experienceRating = calculateExperienceRating(startDate, endDate);
+          const durationText = calculateDurationText(startDate, endDate);
+          return {
+            ...skill,
+            experienceRating,
+            durationText
+          };
+        });
+        setSkills(updatedSkills);
 
         const icons = await loadIcons(response.data);
         setIconComponents(icons);
@@ -22,6 +40,13 @@ const SubmitSkills = () => {
 
     fetchSkills();
   }, []);
+
+  const calculateExperienceRating = (startDate, endDate = new Date()) => {
+    const overallExperience = (endDate - overallDevStartDate) / (1000 * 3600 * 24 * 365);
+    const skillExperience = (endDate - startDate) / (1000 * 3600 * 24 * 365);
+    const rating = (skillExperience / overallExperience) * 100;
+    return Math.min(100, Math.max(0, rating));
+  };
 
   const loadIcons = async (skills) => {
     const icons = {};
@@ -67,6 +92,13 @@ const SubmitSkills = () => {
     }
   };
 
+  const calculateDurationText = (startDate, endDate) => {
+    const totalMonths = (endDate.getFullYear() - startDate.getFullYear()) * 12 + endDate.getMonth() - startDate.getMonth();
+    const years = Math.floor(totalMonths / 12);
+    const months = totalMonths % 12;
+    return `${years > 0 ? `${years} year${years > 1 ? 's' : ''} ` : ''}${months > 0 ? `${months} month${months > 1 ? 's' : ''}` : ''}`.trim();
+  };
+
   return (
     <div className="max-w-4xl mx-auto mt-8">
       <SkillsForm />
@@ -85,11 +117,29 @@ const SubmitSkills = () => {
                 </div>
                 <div className="ml-3">
                   <span className="font-semibold text-lg">{skill.name}</span>
-                  <span className="text-gray-600 ml-2">
+                  {/* <span className="text-gray-600 ml-2">
                     Rating: {skill.rating}
-                  </span>
+                  </span> */}
+
+                </div>
+                {/* <div className="ml-3">
+                  <span>{skill?.startDate}</span>
+                </div> */}
+                <div className="w-full bg-gray-200 rounded-full h-2 mr-3">
+                  <div className="bg-green-500 h-2 rounded-full" style={{ width: `${skill?.experienceRating}%` }}></div>
                 </div>
               </div>
+              <div className="w-full h-3 relative bg-gray-200 rounded mt-1">
+                <div
+                  className="absolute top-0 left-0 h-full bg-green-500 rounded"
+                  style={{ width: `${skill?.experienceRating}%` }}
+                >
+
+                </div>
+
+              </div>
+              <p className="text-xs text-gray-500">{skill.durationText || 'Less than a month'}</p>
+
               <div>
                 <a href={`/admin/skill/${skill._id}`} className="text-blue-500 hover:text-blue-700 mr-4">
                   See Skill

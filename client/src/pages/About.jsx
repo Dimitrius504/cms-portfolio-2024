@@ -90,7 +90,7 @@ const About = () => {
           <h2 className="text-4xl font-semibold mb-8 text-blue-600">Skills</h2>
           <div className="flex flex-wrap gap-2">
             {skills.length > 0 ? skills.map((skill) => (
-              <span key={skill._id} className="bg-blue-100 text-blue-700 text-xl font-medium px-4 py-2 rounded-full shadow transition-colors duration-300 hover:bg-blue-200">
+              <span key={skill._id} className="bg-blue-100 text-blue-700 text-xl font-medium px-4 py-2 rounded-full shadow transition-colors duration-300">
                 {skill?.name}
               </span>
             )) : <p className="text-xl text-gray-700">No skills available at the moment.</p>}

@@ -5,6 +5,8 @@ import HeroContents from "../components/Home/HeroContents";
 import axios from "axios";
 import { iconMapping } from "../../admin/components/IconMapping.js";
 
+const overallDevStartDate = new Date('2022-09-01');
+
 const SkillsTest = () => {
   const [selectedSkills, setSelectedSkills] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -16,7 +18,17 @@ const SkillsTest = () => {
   const handleCardClick = async (category) => {
     try {
       const response = await axios.get(`/api/skills?categoryId=${category._id}`);
-      const categorySkills = response.data;
+      const categorySkills = response.data.map(skill => {
+        const startDate = new Date(skill.startDate);
+        const endDate = skill.endDate ? new Date(skill.endDate) : new Date();
+        const experienceRating = calculateExperienceRating(startDate, endDate);
+        const durationText = calculateDurationText(startDate, endDate);
+        return {
+          ...skill,
+          experienceRating,
+          durationText
+        };
+      });
       setSelectedSkills(categorySkills);
       setSelectedCategory(category.name);
       await loadIcons(categorySkills);
@@ -24,6 +36,7 @@ const SkillsTest = () => {
       console.error("Error fetching skills for the category:", error);
     }
   };
+
 
   const loadIcon = async (iconName) => {
     if (!iconName) return null;
@@ -44,6 +57,20 @@ const SkillsTest = () => {
     }
 
     return ImportedIcon;
+  };
+
+  const calculateExperienceRating = (startDate, endDate = new Date()) => {
+    const overallExperience = (endDate - overallDevStartDate) / (1000 * 3600 * 24 * 365);
+    const skillExperience = (endDate - startDate) / (1000 * 3600 * 24 * 365);
+    const rating = (skillExperience / overallExperience) * 100;
+    return Math.min(100, Math.max(0, rating));
+  };
+
+  const calculateDurationText = (startDate, endDate) => {
+    const totalMonths = (endDate.getFullYear() - startDate.getFullYear()) * 12 + endDate.getMonth() - startDate.getMonth();
+    const years = Math.floor(totalMonths / 12);
+    const months = totalMonths % 12;
+    return `${years > 0 ? `${years} year${years > 1 ? 's' : ''} ` : ''}${months > 0 ? `${months} month${months > 1 ? 's' : ''}` : ''}`.trim();
   };
 
   const loadIcons = async (skills) => {
@@ -89,8 +116,8 @@ const SkillsTest = () => {
                 <h2 className="text-xl md:text-2xl font-semibold mb-4">
                   {selectedCategory}
                 </h2>
-                {selectedSkills.map((skill, index) => (
-                  <div key={index} className="flex flex-col mb-4 md:mb-6">
+                {selectedSkills.map((skill) => (
+                  <div key={skill._id} className="flex flex-col mb-4 md:mb-6">
                     <div className="flex items-center mb-2">
                       <div className="w-1/4 flex items-center justify-center">
                         {iconComponents[skill._id] ? (
@@ -101,13 +128,10 @@ const SkillsTest = () => {
                       </div>
                       <div className="flex flex-col w-3/4">
                         <Link to={`/projects#${skill.name}`} className="text-lg font-medium">{skill.name}</Link>
-                        <div className="w-full h-3 relative bg-gray-200 rounded mt-1">
-                          <div
-                            className="absolute top-0 left-0 h-full bg-green-500 rounded"
-                            style={{ width: `${(skill.rating / 10) * 100}%` }}
-                          ></div>
+                        <div className="w-full bg-gray-200 rounded-full h-2 mr-3">
+                          <div className="bg-green-500 h-2 rounded-full" style={{ width: `${skill.experienceRating}%` }}></div>
                         </div>
-                        <div className="text-right text-sm mt-1">{skill.rating}/10</div>
+                        <p className="text-xs text-gray-500">{skill.durationText || 'Less than a month'}</p>
                       </div>
                     </div>
                   </div>
@@ -133,8 +157,8 @@ const SkillsTest = () => {
         </div>
       </section>
     </div>
-
   );
 };
+
 
 export default SkillsTest;

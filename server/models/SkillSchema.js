@@ -6,9 +6,16 @@ const skillSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  startDate: {
+    type: Date,
+    required: true,
+  },
+  endDate: {
+    type: Date,
+  },
   rating: {
     type: Number,
-    required: true,
+    required: false,
   },
   icon: {
     type: String,

@@ -37,7 +37,7 @@ router.get("/", async (req, res) => {
 // Route for fetching recent skills
 router.get('/recent', async (req, res) => {
   try {
-    const recentSkills = await Skill.find().sort({ createdAt: -1 }).limit(3); // Adjust limit as needed
+    const recentSkills = await Skill.find().sort({ createdAt: -1 }).limit(3);
     res.status(200).json(recentSkills);
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch recent skills' });
@@ -47,31 +47,29 @@ router.get('/recent', async (req, res) => {
 
 // Route for getting a single skill
 router.get("/:id", async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ message: "Invalid ID format" });
+  }
+
   try {
-    const skill = await Skill.findById(req.params.id).populate(
+    const skill = await Skill.findById(id).populate(
       "parentSkillCategory",
       "name"
-    ); // Populate parentSkillCategory with its name
+    );
 
     if (!skill) {
       return res.status(404).json({ message: "Skill not found" });
     }
 
-    // Find projects associated with this skill ID
-    const projects = await Project.find({ skills: req.params.id }).select(
-      "title"
-    );
+    const projects = await Project.find({ skills: id }).select("title");
 
-    res.json({
-      skill,
-      projects,
-    });
+    res.json({ skill, projects });
   } catch (error) {
     console.error("Error fetching skill and associated projects:", error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
-
 
 // Route for creating a new skill
 router.post(
@@ -79,7 +77,9 @@ router.post(
   [
     body('name').notEmpty().withMessage('Name is required'),
     body('parentSkillCategory').optional().isMongoId().withMessage('Invalid category ID'),
-    body('rating').optional().isNumeric().withMessage('Rating should be a number'),
+    // body('rating').optional().isNumeric().withMessage('Rating should be a number'),
+    // body('startDate').optional().isDate().withMessage('Invalid start date'),
+    // body('endDate').optional().isDate().withMessage('Invalid end date'),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -92,48 +92,41 @@ router.post(
       parentSkillCategory: req.body.parentSkillCategory,
       rating: req.body.rating,
       icon: req.body.icon,
+      startDate: req.body.startDate,
+      endDate: req.body.endDate,
     });
 
     try {
       const newSkill = await skill.save();
+      console.log("New skill added:", newSkill);
       res.status(201).json(newSkill);
     } catch (error) {
       res.status(400).json({ message: error.message });
+      console.error("Error adding skill:", error);
     }
   }
 );
 
 // Route for updating a skill
-router.patch(
-  "/:id",
-  [
-    body('name').optional().notEmpty().withMessage('Name cannot be empty'),
-    body('parentSkillCategory').optional().isMongoId().withMessage('Invalid category ID'),
-    body('rating').optional().isNumeric().withMessage('Rating should be a number'),
-  ],
-  async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
+router.patch("/:id", async (req, res) => {
+  const { name, icon, parentSkillCategory, rating, startDate, endDate } = req.body;
 
-    try {
-      const skill = await Skill.findById(req.params.id);
-      if (!skill) return res.status(404).json({ message: "Skill not found" });
-
-      if (req.body.name != null) skill.name = req.body.name;
-      if (req.body.parentSkillCategory != null)
-        skill.parentSkillCategory = req.body.parentSkillCategory;
-      if (req.body.rating != null) skill.rating = req.body.rating;
-      if (req.body.icon != null) skill.icon = req.body.icon;
-
-      const updatedSkill = await skill.save();
-      res.json(updatedSkill);
-    } catch (error) {
-      res.status(400).json({ message: error.message });
-    }
+  if (!name || !icon || !parentSkillCategory || !rating || !startDate) {  // Validate required fields
+    return res.status(400).json({ message: "Missing required fields" });
   }
-);
+
+  try {
+    const updatedSkill = await Skill.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true });
+    if (!updatedSkill) {
+      return res.status(404).json({ message: "Skill not found" });
+    }
+    res.json(updatedSkill);
+  } catch (error) {
+    console.error("Error updating skill:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
 
 
 // Route for deleting a skill
