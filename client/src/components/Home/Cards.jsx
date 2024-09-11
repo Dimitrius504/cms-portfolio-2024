@@ -72,7 +72,7 @@ const Cards = () => {
           <h2 className="text-3xl font-bold flex justify-center">Testimonials</h2>
           {testimonials.length > 0 ? (
             <div className="flex flex-col justify-between h-full">
-              <div>
+              <div className="flex flex-col">
                 <h3 className="text-xl">{testimonials[currentSlide].name}</h3>
                 <p className="mt-2 mb-4">{testimonials[currentSlide].text}</p>
                 <p className="text-sm text-gray-600">
@@ -82,14 +82,21 @@ const Cards = () => {
                   Relationship: {testimonials[currentSlide].relationship || 'Not specified'}
                 </p>
               </div>
-
+              {user && (
+                <Link
+                  to="/account"
+                  className="inline-block bg-blue-500 text-white rounded-lg px-4 py-2 hover:bg-blue-600 mt-2 self-center"
+                >
+                  Leave a Testimony
+                </Link>
+              )}
               {testimonials.length > 1 && (
-                <div className="flex justify-between items-center mt-4">
-                  <button onClick={prevSlide} className="bg-gray-200 text-gray-800 rounded-full w-10 h-10 shadow hover:bg-gray-300 transition">
-                    <FaChevronLeft size={16} />
+                <div className="flex justify-center items-center mt-4 gap-4">
+                  <button onClick={prevSlide} className="bg-gray-200 text-gray-800 rounded-full p-2 shadow hover:bg-gray-300 transition">
+                    <FaChevronLeft size={24} />
                   </button>
-                  <button onClick={nextSlide} className="bg-gray-200 text-gray-800 rounded-full w-10 h-10 shadow hover:bg-gray-300 transition">
-                    <FaChevronRight size={16} />
+                  <button onClick={nextSlide} className="bg-gray-200 text-gray-800 rounded-full p-2 shadow hover:bg-gray-300 transition">
+                    <FaChevronRight size={24} />
                   </button>
                 </div>
               )}
@@ -97,25 +104,12 @@ const Cards = () => {
           ) : (
             <div className="flex flex-col items-center justify-center h-full p-6">
               <p className="text-xl align-left w-full">So quiet...</p>
-              <div className="w-full h-full">
-
-              {user ? (
-                <Link
-                  to="/account"
-                  className="inline-block bg-black text-white rounded-lg px-4 py-2 hover:bg-gray-700 mt-8 align-left"
-                >
-                  Be The First!
-                </Link>
-              ) : (
-                <Link
-                  to="/signin"
-                  className="inline-block bg-black text-white rounded-lg px-4 py-2 hover:bg-gray-700 mt-8 align-left"
-                >
-                  Be The First!
-                </Link>
-              )}
-              </div>
-
+              <Link
+                to="/account"
+                className="inline-block bg-black text-white rounded-lg px-4 py-2 hover:bg-gray-700 mt-8 align-left"
+              >
+                Be The First!
+              </Link>
             </div>
           )}
         </div>
