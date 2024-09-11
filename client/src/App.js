@@ -1,5 +1,6 @@
 import React, { lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 import Header from "./components/shared/HeaderContents/Header";
 import Footer from "./components/shared/FooterContents/Footer";
@@ -39,6 +40,18 @@ const SingleExperiencePage = lazy(() => import('../admin/pages/singleHobbyTempla
 
 
 const App = () => {
+
+  <Helmet>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-NEBQTL723N"></script>
+    <script>
+      {`
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-NEBQTL723N');
+    `}
+    </script>
+  </Helmet>
 
   const isAdmin = true;
 
@@ -94,7 +107,7 @@ const App = () => {
                 <Route path="/projects" element={<ProjectsTestPage />} />
                 <Route path="/resume" element={<Resumepage />} />
                 <Route path="/account" element={
-                    <Accountpage isAdmin={isAdmin} />
+                  <Accountpage isAdmin={isAdmin} />
                 } />
                 <Route path="/admin/categories" element={
                   <AdminRoute>
