@@ -11,7 +11,7 @@ const Resume = () => {
         <div className="container mx-auto max-w-4xl">
           <div className="flex justify-center items-center mt-4 mb-4">
             <a
-              href="/uploads/resume_2024 (1).pdf"
+              href="/uploads/dimitrius_mckinnon_resume.pdf"
               download
               className="bg-blue-500 text-white py-2 px-4 rounded-lg md:text-base md:px-6 md:py-3 md:rounded-md md:shadow-lg hover:bg-blue-700 transition duration-300 ease-in-out flex items-center"
             >
