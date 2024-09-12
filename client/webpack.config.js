@@ -27,6 +27,13 @@ module.exports = (env, argv) => {
         {
           test: /\.css$/,
           use: ['style-loader', 'css-loader', 'postcss-loader']
+        },
+        {
+          test: /\.pdf$/,
+          type: 'asset/resource',
+          generator: {
+            filename: 'static/[hash][ext][query]'
+          }
         }
       ]
     },
