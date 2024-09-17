@@ -67,7 +67,7 @@ router.get("/:id", async (req, res) => {
 // Route for updating a project
 router.patch("/:id", async (req, res) => {
   try {
-    const { title, description, githubLink, liveLink, date, skills } = req.body;
+    const { title, description, githubLink, liveLink, date, skills, isKeyProject } = req.body;
     const project = await Project.findById(req.params.id);
 
     if (!project) {
@@ -79,8 +79,8 @@ router.patch("/:id", async (req, res) => {
     project.githubLink = githubLink;
     project.liveLink = liveLink || "";
     project.date = new Date(date);
+    project.isKeyProject = isKeyProject;
 
-    // Update skills
     if (skills && Array.isArray(skills)) {
       project.skills = skills;
     }

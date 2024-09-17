@@ -85,6 +85,7 @@ const ProjectsTest = () => {
               projectLink={project.liveLink}
               githubLink={project.githubLink}
               date={project.date}
+              isKeyProject={project.isKeyProject}
               onClick={() => openPopup(project)}
             />
           ))}

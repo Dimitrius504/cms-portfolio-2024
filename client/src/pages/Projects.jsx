@@ -66,6 +66,7 @@ const Projects = () => {
               title={project.title}
               description={project.description}
               technologies={project.technologies}
+              isKeyProject={project.isKeyProject}
               onClick={() => openPopup(project)}
             />
           ))}

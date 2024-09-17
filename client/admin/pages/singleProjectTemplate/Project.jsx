@@ -61,16 +61,21 @@ const Project = () => {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-
-    if (type === "checkbox") {
+  
+    if (type === "checkbox" && name === "skills") {
       const skillId = value;
       const updatedSkills = checked
         ? [...editedProject.skills, skillId]
         : editedProject.skills.filter((id) => id !== skillId);
-
+  
       setEditedProject((prev) => ({
         ...prev,
         skills: updatedSkills,
+      }));
+    } else if (type === "checkbox" && name === "isKeyProject") {
+      setEditedProject((prev) => ({
+        ...prev,
+        isKeyProject: checked,
       }));
     } else if (type === "date") {
       const parsedDate = new Date(value).toISOString();
@@ -85,7 +90,7 @@ const Project = () => {
       }));
     }
   };
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -188,6 +193,20 @@ const Project = () => {
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
+          <div className="mb-4">
+            <label className="block text-sm font-bold text-gray-700 mb-2">
+              Key Project
+            </label>
+            <input
+              type="checkbox"
+              id="isKeyProject"
+              name="isKeyProject"
+              checked={editedProject.isKeyProject || false}
+              onChange={handleChange}
+              className="leading-tight"
+            />
+          </div>
+
           <div className="mb-4">
             <label
               htmlFor="date"

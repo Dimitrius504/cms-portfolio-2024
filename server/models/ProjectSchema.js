@@ -20,6 +20,10 @@ const ProjectSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
+  isKeyProject: {
+    type: Boolean,
+    default: false,
+  },
   skills: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Skill',
