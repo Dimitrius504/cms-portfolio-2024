@@ -117,6 +117,7 @@ const About = () => {
               <div key={edu._id}>
                 <h3 className="text-3xl font-semibold">{edu.degreeTitle}</h3>
                 <p className="text-gray-600 italic">{edu.institutionName}, {new Date(edu.startDate).getFullYear()} - {edu.endDate ? new Date(edu.endDate).getFullYear() : 'Present'}</p>
+                <p className='text-xl text-gray-700'>{edu.description}</p>
               </div>
             )) : <p className="text-xl text-gray-700">No education details available at the moment.</p>}
           </div>
