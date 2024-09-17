@@ -15,7 +15,7 @@ const ProjectPopup = ({ project, closePopup }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center px-4 py-20">
-      <div className="w-full max-w-2xl bg-white p-8 rounded-lg shadow-lg overflow-auto">
+      <div className="w-full max-w-2xl bg-white p-8 rounded-lg shadow-lg overflow-auto project-popup">
         <h2 className="text-2xl font-bold mb-4">{project.title}</h2>
         <p className="text-gray-800 mb-6">{project.description}</p>
         <div className="space-y-2">

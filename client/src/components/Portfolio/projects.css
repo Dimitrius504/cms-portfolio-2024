@@ -12,3 +12,21 @@
 #popup-container {
 	max-width: 80%;
 }
+
+.project-popup {
+	width: 100%;
+	max-width: 600px;
+	padding: 20px;
+	background: white;
+	border-radius: 8px;
+	overflow: auto;
+  }
+  
+  @media (max-width: 600px) {
+	.project-popup {
+	  max-width: 90%;
+	  padding: 10px;
+	  font-size: 14px;
+	}
+  }
+  
