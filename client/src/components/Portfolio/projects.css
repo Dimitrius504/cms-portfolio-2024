@@ -19,7 +19,7 @@
 	padding: 20px;
 	background: white;
 	border-radius: 8px;
-	overflow: auto;
+	overflow: scroll;
   }
   
   @media (max-width: 600px) {
