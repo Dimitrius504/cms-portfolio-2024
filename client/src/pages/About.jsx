@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import HeroContents from '../components/Home/HeroContents';
+import { Helmet } from 'react-helmet';
 
 const About = () => {
   const [skills, setSkills] = useState([]);
@@ -71,7 +72,13 @@ const About = () => {
   }, []);
 
   return (
+
     <>
+      <Helmet>
+        <title>About Me - Dimitrius McKinnon</title>
+        <meta name="description" content="Discover more about Dimitrius McKinnon's journey, expertise, and passions." />
+        <link rel="canonical" href="/about" />
+      </Helmet>
       <HeroContents
         title="About Me"
         subtitle="Discover more about my journey, expertise, and passions."
@@ -130,7 +137,15 @@ const About = () => {
               <div key={hobby._id} className="shadow-lg p-6 rounded-lg bg-white flex flex-col items-center text-center">
                 <h3 className="text-2xl font-semibold mb-2">{hobby.title}</h3>
                 {hobby.imageUrl && (
-                  <img src={hobby.imageUrl} alt={hobby.title} className="w-32 h-32 object-cover rounded-full shadow mb-4" />
+                  <img
+                    src={hobby.imageUrl}
+                    alt={hobby.title}
+                    title={hobby.title}
+                    loading="lazy"
+                    width="128"
+                    height="128"
+                    className="w-32 h-32 object-cover rounded-full shadow mb-4"
+                  />
                 )}
                 <p className="text-lg text-gray-700">{hobby.description}</p>
               </div>

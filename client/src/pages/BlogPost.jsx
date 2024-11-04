@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { FaArrowLeft } from 'react-icons/fa';
+import { Helmet } from 'react-helmet-async';
 
 const BlogPost = () => {
     const { id } = useParams();
@@ -44,6 +45,13 @@ const BlogPost = () => {
 
     return (
         <div className="max-w-4xl mx-auto p-6 bg-gray-100 rounded-lg shadow-md">
+            <Helmet>
+                <title>{post?.title}</title>
+                <meta name="author" content={post?.author} />
+                <meta name="description" content={`My Thoughts | ${post?.title}`} />
+                <link rel="canonical" href={`/blog/${id}`} />
+            </Helmet>
+
             <Link to="/blog" className="text-blue-500 hover:text-blue-700 flex items-center mb-6">
                 <FaArrowLeft className="mr-2" /> All Blogs
             </Link>
@@ -52,6 +60,10 @@ const BlogPost = () => {
                     <img
                         src={`/${post?.image}`}
                         alt={post?.title}
+                        title={post?.title}
+                        loading="lazy"
+                        width="128"
+                        height="128"
                         className="w-full h-auto max-h-96 rounded-lg shadow-lg object-cover"
                     />
                 </div>

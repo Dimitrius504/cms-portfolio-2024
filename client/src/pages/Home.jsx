@@ -4,10 +4,16 @@ import Cards from '../components/Home/Cards';
 import CallToActionButton from '../components/Home/CtaButtons';
 import { FaGithub } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
+import { Helmet } from 'react-helmet-async';
 
 const Home = () => {
   return (
     <div className='bg-gray-50 min-h-screen'>
+      <Helmet>
+        <title>Dimitrius McKinnon | Full Stack Developer</title>
+        <meta name="description" content="Dimitrius McKinnon is a full stack developer with a passion for creating web applications." />
+        <link rel="canonical" href="/" />
+      </Helmet>
       <HeroContents title='Dimitrius McKinnon' subtitle='Welcome To My Full Stack Portfolio' bg='bg-indigo-700' />
       <section className='flex justify-evenly text-center p-6'>
         <div className="flex flex-wrap flex-col justify-center text-center">

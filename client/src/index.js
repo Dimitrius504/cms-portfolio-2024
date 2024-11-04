@@ -1,7 +1,17 @@
 import React from 'react';
-import App from './App';
 import { createRoot } from 'react-dom/client';
+import { HelmetProvider } from 'react-helmet-async';
+import App from './App';
 import './styles/tailwind.css';
 import './styles.css';
 
-createRoot(document.getElementById('root')).render(<App />);
+const container = document.getElementById('root');
+const root = createRoot(container);
+
+root.render(
+  <React.StrictMode>
+    <HelmetProvider>
+      <App />
+    </HelmetProvider>
+  </React.StrictMode>
+);

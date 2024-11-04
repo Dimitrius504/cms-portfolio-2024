@@ -1,6 +1,6 @@
 import React, { lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Helmet } from "react-helmet";
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 import Header from "./components/shared/HeaderContents/Header";
 import Footer from "./components/shared/FooterContents/Footer";
@@ -56,7 +56,9 @@ const App = () => {
   const isAdmin = true;
 
   return (
+    <HelmetProvider>
     <div className="flex flex-col h-screen">
+      
       <BrowserRouter>
         <UserProvider>
           <Header />
@@ -156,6 +158,7 @@ const App = () => {
         </UserProvider>
       </BrowserRouter>
     </div>
+    </HelmetProvider>
   );
 };
 

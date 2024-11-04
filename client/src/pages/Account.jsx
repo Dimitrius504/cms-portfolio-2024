@@ -3,6 +3,7 @@ import axios from 'axios';
 import AdminSection from '../components/ProfileAuth/AdminSection';
 import { useUser } from '../context/UserContext.js';
 import HeroContents from '../components/Home/HeroContents.jsx';
+import {Helmet} from 'react-helmet-async'
 
 const Account = () => {
   const { user, logout } = useUser();
@@ -106,6 +107,15 @@ const Account = () => {
 
   return (
     <>
+      <Helmet>
+        <title>{user?.user?.firstName}'s Account</title>
+        <meta
+          name="description"
+          content="Unlock the opportunity to leave a testimonial, request admin access, and more."
+        />
+        <link rel="canonical" href="/account" />
+      </Helmet>
+
       <HeroContents
         title={`${user?.user?.firstName}'s Account`}
         subtitle="Discover more about my journey, expertise, and passions."

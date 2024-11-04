@@ -4,6 +4,7 @@ import SkillsCards from "../components/Skills/SkillsCards";
 import HeroContents from "../components/Home/HeroContents";
 import axios from "axios";
 import { iconMapping } from "../../admin/components/IconMapping.js";
+import { Helmet } from "react-helmet-async";
 
 const overallDevStartDate = new Date('2022-09-01');
 
@@ -103,6 +104,18 @@ const SkillsTest = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>
+          Skills - Dimitrius McKinnon
+        </title>
+        <meta
+          name="description"
+          content="Explore the skills and technologies that I have experience with."
+        />
+        <link rel="canonical" href="/skills" />
+        
+      </Helmet>
+
       <HeroContents
         title="Skills"
         subtitle="Details Of My Skills"

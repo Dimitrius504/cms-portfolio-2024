@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import EmailForm from '../components/Contact/EmailForm.jsx';
 import HeroContents from '../components/Home/HeroContents.jsx';
 import axios from 'axios';
+import { Helmet } from 'react-helmet-async';
 
 const Contact = () => {
 
@@ -21,6 +22,13 @@ const Contact = () => {
   }, []);
   return (
     <>
+      <Helmet>
+        <title>Contact Me - Dimitrius McKinnon</title>
+        <meta name="description" content="Contact Dimitrius McKinnon for any inquiries or questions." />
+        <link rel="canonical" href='/contact' />
+      </Helmet>
+
+
       <HeroContents
         title="Contact Me"
         subtitle="Don't hesitate to reach out to me!"

@@ -4,6 +4,7 @@ import ProjectComponent from "../components/Portfolio/ProjectComponent";
 import PortfolioItems from "../components/Portfolio/ProjectsData";
 import ProjectPopup from "../components/Portfolio/ProjectPopup";
 import "../components/Portfolio/projects.css";
+import { Helmet } from "react-helmet-async";
 
 const Projects = () => {
   const [selectedTechnology, setSelectedTechnology] = useState(null);
@@ -26,6 +27,15 @@ const Projects = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Projects - Dimitrius McKinnon</title>
+        <meta
+          name="description"
+          content="Explore some of the projects I have worked on."
+        />
+        <link rel="canonical" href="/projects" />
+      </Helmet>
+      
       <HeroContents
         title="Projects"
         subtitle="See Some Of my Projects"
@@ -45,8 +55,8 @@ const Projects = () => {
               <button
                 key={index}
                 className={`px-4 py-2 rounded-md focus:outline-none ${selectedTechnology === technology
-                    ? "bg-indigo-600 text-white"
-                    : "bg-gray-300 text-gray-700"
+                  ? "bg-indigo-600 text-white"
+                  : "bg-gray-300 text-gray-700"
                   }`}
                 onClick={() => filterProjectsByTechnology(technology)}
               >

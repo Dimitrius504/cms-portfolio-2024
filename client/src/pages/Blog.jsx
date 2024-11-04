@@ -3,6 +3,7 @@ import axios from 'axios';
 import BlogPostPreview from '../components/Blog/BlogPostPreview';
 import BlogListContainer from '../components/Blog/BlogListContainer';
 import { useUser } from '../context/UserContext';
+import { Helmet } from 'react-helmet-async';
 
 const Blog = () => {
     const [posts, setPosts] = useState([]);
@@ -33,16 +34,28 @@ const Blog = () => {
     };
 
     return (
-        <BlogListContainer>
-            {posts.map(post => (
-                <BlogPostPreview
-                    key={post._id}
-                    post={post}
-                    isAdmin={isAdmin}
-                    onDelete={handleDelete}
+        <>
+            <Helmet>
+                <title>My Blog - Dimitrius McKinnon</title>
+                <meta
+                    name="description"
+                    content="Discover some of my thoughts and experiences in the tech industry."
                 />
-            ))}
-        </BlogListContainer>
+                <link rel="canonical" href="/blog" />
+            </Helmet>
+            <BlogListContainer>
+
+                {posts.map(post => (
+                    <BlogPostPreview
+                        key={post._id}
+                        post={post}
+                        isAdmin={isAdmin}
+                        onDelete={handleDelete}
+                    />
+                ))}
+            </BlogListContainer>
+        </>
+
     );
 };
 

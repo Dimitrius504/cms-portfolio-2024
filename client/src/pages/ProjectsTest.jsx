@@ -4,6 +4,7 @@ import ProjectComponent from "../components/Portfolio/ProjectComponent";
 import ProjectPopup from "../components/Portfolio/ProjectPopup";
 import "../components/Portfolio/projects.css";
 import axios from "axios";
+import { Helmet } from "react-helmet-async";
 
 const ProjectsTest = () => {
   const [selectedSkill, setSelectedSkill] = useState(null);
@@ -49,6 +50,15 @@ const ProjectsTest = () => {
 
   return (
     <>
+     <Helmet>
+        <title>Projects - Dimitrius McKinnon</title>
+        <meta
+          name="description"
+          content="Explore some of my favourite and most recent projects."
+        />
+        <link rel="canonical" href="/projects" />
+      </Helmet>
+      
       <HeroContents
         title="Projects"
         subtitle="See Some Of my Projects"

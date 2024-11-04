@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import HeroContents from '../components/Home/HeroContents';
 import { IoIosDownload } from "react-icons/io";
 import axios from 'axios';
+import { Helmet } from 'react-helmet-async';
 // import resume from '../../../uploads/dimitrius_mckinnon_resume.pdf';
 
 
@@ -25,6 +26,15 @@ const Resume = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Resume - Dimitrius McKinnon</title>
+        <meta
+          name="description"
+          content="Discover some of my technical skills & experiences." 
+        />
+        <link rel="canonical" href="/resume" />
+      </Helmet>
+      
       <HeroContents title='Resume' subtitle='Discover some of my technical skills & experiences' bg='bg-indigo-700' />
 
       <div className="bg-white p-8">
