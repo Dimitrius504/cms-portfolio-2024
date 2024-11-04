@@ -108,7 +108,7 @@ const Account = () => {
   return (
     <>
       <Helmet>
-        <title>{user?.user?.firstName}'s Account</title>
+        <title>Account Page - Dimitrius McKinnon Portfolio</title>
         <meta
           name="description"
           content="Unlock the opportunity to leave a testimonial, request admin access, and more."
