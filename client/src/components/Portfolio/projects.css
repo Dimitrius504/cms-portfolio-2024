@@ -21,13 +21,12 @@
 	border-radius: 8px;
 	overflow-y: auto;
 	max-height: 80vh;
-  }
-  
-  @media (max-width: 600px) {
+}
+
+@media (max-width: 600px) {
 	.project-popup {
-	  max-width: 90%;
-	  padding: 10px;
-	  font-size: 14px;
+		max-width: 90%;
+		padding: 10px;
+		font-size: 14px;
 	}
-  }
-   
+}

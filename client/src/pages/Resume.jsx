@@ -1,9 +1,28 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import HeroContents from '../components/Home/HeroContents';
 import { IoIosDownload } from "react-icons/io";
+import axios from 'axios';
 // import resume from '../../../uploads/dimitrius_mckinnon_resume.pdf';
 
+
 const Resume = () => {
+  const [resumeUrl, setResumeUrl] = useState('');
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    const fetchResume = async () => {
+      try {
+        const response = await axios.get('/api/s3');
+        setResumeUrl(response?.data?.url);
+      } catch (error) {
+        console.error('Error fetching resume URL:', error);
+        setError('Failed to fetch the resume. Please try again later.');
+      }
+    };
+
+    fetchResume();
+  }, []);
+
   return (
     <>
       <HeroContents title='Resume' subtitle='Discover some of my technical skills & experiences' bg='bg-indigo-700' />
@@ -11,14 +30,14 @@ const Resume = () => {
       <div className="bg-white p-8">
         <div className="container mx-auto max-w-4xl">
           <div className="flex justify-center items-center mt-4 mb-4">
-            <a
-              href="https://github.com/Dimitrius504/dimitrius_mckinnon_resume/blob/main/dimitrius_mckinnon_resume.pdf"
-              download="Dimitrius_McKinnon_Resume.pdf"
-              className="bg-blue-500 text-white py-2 px-4 rounded-lg md:text-base md:px-6 md:py-3 md:rounded-md md:shadow-lg hover:bg-blue-700 transition duration-300 ease-in-out flex items-center"
-            >
-              Download Resume
-              <IoIosDownload />
-            </a>
+            {resumeUrl ? (
+              <a href={resumeUrl} target="_blank" rel="noopener noreferrer"
+                 className="bg-blue-500 text-white py-2 px-4 rounded-lg md:text-base md:px-6 md:py-3 md:rounded-md md:shadow-lg hover:bg-blue-700 transition duration-300 ease-in-out flex items-center">
+                Download Resume <IoIosDownload />
+              </a>
+            ) : (
+              <p>{error || 'Loading...'}</p>
+            )}
           </div>
           <div className='hidden md:block'>
 

@@ -8,6 +8,7 @@ import blogRouter from './server/routes/blog.js'
 import aboutRouter from './server/routes/about.js'
 import testimonialRouter from './server/routes/testimonials.js'
 import statusRouter from './server/routes/status.js'
+import s3Router from './server/routes/s3Route.js'
 
 const router = express.Router();
 
@@ -20,6 +21,7 @@ router.use('/projects', projectsRouter)
 router.use('/send-email', contactrouter)
 router.use('/testimonials', testimonialRouter)
 router.use('/status', statusRouter);
+router.use('/s3', s3Router);
 
 
 export default router;

@@ -6,6 +6,7 @@ import EducationForm from '../components/About/EducationForm';
 import HobbiesForm from '../components/About/HobbiesForm';
 import { useUser } from '../../src/context/UserContext';
 import { useNavigate } from 'react-router-dom';
+import ResumeUpload from '../components/Resume/ResumeUpload';
 
 const AdminAboutPage = () => {
     const { user } = useUser();
