@@ -10,11 +10,11 @@ const Home = () => {
   return (
     <div className='bg-gray-50 min-h-screen'>
       <Helmet>
-        <title>Dimitrius McKinnon | Full Stack Developer</title>
-        <meta name="description" content="Dimitrius McKinnon is a full stack developer with a passion for creating web applications." />
+        <title>Dimitrius McKinnon | Customer-Facing Tech & Ops | Automation + Process Improvement</title>
+        <meta name="description" content="Customer-facing tech and operations professional focused on automation, process improvement, and clear communication under pressure." />
         <link rel="canonical" href="/" />
       </Helmet>
-      <HeroContents title='Dimitrius McKinnon' subtitle='Welcome To My Full Stack Portfolio' bg='bg-indigo-700' />
+      <HeroContents title='Dimitrius McKinnon' subtitle='Customer Success • Operations • Automation' bg='bg-indigo-700' />
       <section className='flex justify-evenly text-center p-6'>
         <div className="flex flex-wrap flex-col justify-center text-center">
           <a href="https://github.com/Dimitrius504"
@@ -26,7 +26,7 @@ const Home = () => {
         </div>
 
         <div className="flex flex-wrap justify-evenly items-center">
-          <CallToActionButton text="Download My Resume" linkTo="/resume" />
+          <CallToActionButton text="View My Resume" linkTo="/resume" />
         </div>
         <div className="flex flex-wrap flex-col justify-center text-center">
           <a href="https://www.linkedin.com/in/dimitriusmckinnon/"
